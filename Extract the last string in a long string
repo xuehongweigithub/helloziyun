@@ -1,0 +1,30 @@
+// vbf-System-rrncnn-14-16-ISO8859-1  to ISO8859-1
+// learn from minigui
+
+#define NR_LOOP_FOR_CHARSET 5
+BOOL fontGetCharsetFromName (const char* name, char* charset)
+{
+    int i;
+    char* delim;
+    const char* charset_part = name;
+
+    for (i = 0; i < NR_LOOP_FOR_CHARSET; i++) {
+        if ((charset_part = strchr (charset_part, '-')) == NULL)
+            return FALSE;
+        if (*(++charset_part) == '\0')
+            return FALSE;
+    }
+
+    if ((delim = strchr (charset_part, ','))) {
+        int len;
+        len = delim - charset_part;
+        strncpy (charset, charset_part, len);
+        charset [len] = '\0';
+        return TRUE;
+    }
+
+    strncpy (charset, charset_part, LEN_FONT_NAME);
+    charset [LEN_FONT_NAME] = '\0';
+    return TRUE;
+}
+
